@@ -78,7 +78,7 @@ export const FirebaseContextProvider = ({ children }) => {
 
   const value = {
     googleSignIn,
-    user,
+    profile: JSON.parse(user),
     signed: !!user,
   }
 

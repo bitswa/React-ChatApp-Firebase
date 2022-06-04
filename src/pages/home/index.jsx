@@ -6,7 +6,7 @@ import './style.css';
 
 export const Home = () => {
 
-  const { signOut, user } = useContext(FirebaseContext);
+  const { signOut, profile } = useContext(FirebaseContext);
 
   const messageRef = collection(db, 'messages');
 
@@ -43,7 +43,7 @@ export const Home = () => {
     });
   }, [])
  
-  const profile = JSON.parse(JSON.stringify(user));
+  
   
 
   return (
@@ -65,7 +65,9 @@ export const Home = () => {
                         {profile.displayName}
                       </span>
                       <span>
-                        {msg.createdAt.toDate().toLocaleTimeString()}
+                        { msg.createdAt &&
+                        msg.createdAt.toDate().toLocaleTimeString()
+                        }
                       </span>
                     </div>
                     <div className='c-text'>
