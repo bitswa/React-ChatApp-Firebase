@@ -18,6 +18,7 @@ export const ChatMessage = (props) => {
           </span>
           <span>
             {
+            createdAt &&
             createdAt.toDate().toLocaleTimeString()
             }
           </span>
