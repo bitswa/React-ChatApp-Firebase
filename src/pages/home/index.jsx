@@ -3,16 +3,17 @@ import { FirebaseContext } from '../../contexts/FirebaseContext';
 import { db } from '../../firebase';
 import { addDoc, onSnapshot, query, orderBy, limit, serverTimestamp, collection } from 'firebase/firestore';
 import './style.css';
+import { ChatMessage } from '../../components/ChatMessage';
 
 export const Home = () => {
 
   const { signOut, user } = useContext(FirebaseContext);
 
-  const [profile, setProfile] = useState(null)
+  const [json, setJson] = useState(null)
 
   useEffect(() => {
     if (JSON.stringify(user)) {
-      setProfile(JSON.parse(user))
+      setJson(JSON.parse(user))
     }
   }, [user])
 
@@ -32,7 +33,9 @@ export const Home = () => {
 
     await addDoc(messageRef, {
       text: msg,
+      name: json.displayName,
       createdAt: serverTimestamp(),
+      photoURL: json.photoURL,
     })
 
     setMsg('');
@@ -57,30 +60,7 @@ export const Home = () => {
         <button onClick={signOut}>Sign out</button>
       </header>
       <main className='c-chat'>
-          { messages && messages.map((msg, index) => {
-              return (
-                <div className='c-text_box' key={index}>
-                  <div className='c-image'>
-                    <img src={profile.photoURL} alt="" />
-                  </div>
-                  <div className='c-box'>
-                    <div className='c-name'>
-                      <span>
-                        {profile.displayName}
-                      </span>
-                      <span>
-                        { msg.createdAt &&
-                        msg.createdAt.toDate().toLocaleTimeString()
-                        }
-                      </span>
-                    </div>
-                    <div className='c-text'>
-                      <p>{msg.text}</p>
-                    </div>
-                  </div>
-                </div>
-              )
-            })
+          { messages && messages.map((msg, index) => <ChatMessage key={index} msg={msg} index={index} />)
           }
           <div ref={dummy}></div>
       </main>

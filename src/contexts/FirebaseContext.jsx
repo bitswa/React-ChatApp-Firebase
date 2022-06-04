@@ -50,6 +50,7 @@ export const FirebaseContextProvider = ({ children }) => {
   const value = {
     googleSignIn,
     user,
+    signOut,
     signed: !!user,
   }
 
