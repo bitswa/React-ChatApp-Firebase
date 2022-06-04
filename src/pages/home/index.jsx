@@ -6,13 +6,20 @@ import './style.css';
 
 export const Home = () => {
 
-  const { signOut, profile } = useContext(FirebaseContext);
+  const { signOut, user } = useContext(FirebaseContext);
+
+  const [profile, setProfile] = useState(null)
+
+  useEffect(() => {
+    if (JSON.stringify(user)) {
+      setProfile(JSON.parse(user))
+    }
+  }, [user])
 
   const messageRef = collection(db, 'messages');
 
   const inputMsg = useRef();
   const dummy = useRef();
-
   const [msg, setMsg] = useState('');
   const [messages, setMessages] = useState([]);
 
@@ -42,9 +49,6 @@ export const Home = () => {
       })
     });
   }, [])
- 
-  
-  
 
   return (
     <div className='c-card'>

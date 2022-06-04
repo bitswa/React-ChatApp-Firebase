@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
-import { auth } from '../firebase';
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { Navigate } from 'react-router-dom';
 
 export const FirebaseContext = createContext();
@@ -29,7 +28,7 @@ export const FirebaseContextProvider = ({ children }) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
-      setUser(user);
+      setUser(JSON.stringify(user));
       sessionStorage.setItem('@user', JSON.stringify(user));
       sessionStorage.setItem('@token', token);
     }).catch((error) => {
@@ -38,34 +37,6 @@ export const FirebaseContextProvider = ({ children }) => {
       const email = error.email;
       const credential = GoogleAuthProvider.credentialFromError(error);
       console.log(errorCode, errorMessage, email, credential);
-    });
-  }
-
-  const signIn = () => {
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      setUser(user);
-      sessionStorage.setItem('@user', JSON.stringify(user));
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
-  }
-
-  const signUp = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      setUser(user);
-      sessionStorage.setItem('@user', JSON.stringify(user));
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
     });
   }
 
@@ -78,7 +49,7 @@ export const FirebaseContextProvider = ({ children }) => {
 
   const value = {
     googleSignIn,
-    profile: JSON.parse(user),
+    user,
     signed: !!user,
   }
 
