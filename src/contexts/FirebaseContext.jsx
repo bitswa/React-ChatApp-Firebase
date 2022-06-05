@@ -10,10 +10,10 @@ export const FirebaseContextProvider = ({ children }) => {
 
   useEffect(() => {
     const getStoragedUser = () => {
-      const sessionUser = sessionStorage.getItem('@user');
-      const sessionToken = sessionStorage.getItem('@token');
-      if (sessionUser && sessionToken) { 
-        setUser(sessionUser) 
+      const localUser = localStorage.getItem('@user');
+      const localToken = localStorage.getItem('@token');
+      if (localUser && localToken) { 
+        setUser(localUser)
       }
     }
     getStoragedUser();
@@ -28,8 +28,8 @@ export const FirebaseContextProvider = ({ children }) => {
         const token = credential.accessToken;
         const user = result.user;
         setUser(JSON.stringify(user));
-        sessionStorage.setItem('@user', JSON.stringify(user));
-        sessionStorage.setItem('@token', token);
+        localStorage.setItem('@user', JSON.stringify(user));
+        localStorage.setItem('@token', token);
       }).catch(error => {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -40,8 +40,8 @@ export const FirebaseContextProvider = ({ children }) => {
   }
 
   const signOut = () => {
-    sessionStorage.removeItem('@user');
-    sessionStorage.removeItem('@token');
+    localStorage.removeItem('@user');
+    localStorage.removeItem('@token');
     setUser(null)
     return <Navigate to='/' />
   }

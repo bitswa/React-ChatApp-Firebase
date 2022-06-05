@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom'
 import { FirebaseContext } from '../../contexts/FirebaseContext';
-import './style.css';
 
 export const Login = () => {
   

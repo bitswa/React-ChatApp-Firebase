@@ -9,15 +9,16 @@
 }
 
 body {
-  display: grid;
-  place-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   background: linear-gradient(to right, #00c6fb 0%, #005bea 100%);
 }
 
 .c-card {
   width: 800px;
-  height: 600px;
+  height: 100vh;
 }
 
 .c-header {
@@ -32,10 +33,11 @@ body {
 .c-header button {
   border: none;
   background-color: #2C2F33;
+  cursor: pointer;
 }
 
 .c-chat {
-  height: 500px;
+  height: calc(100vh - 129px);
   overflow-y: scroll;
   scrollbar-color: #7289DA #2C2F33;
   scrollbar-track-color: #23272A;
@@ -44,7 +46,6 @@ body {
 .c-chat::-webkit-scrollbar {
   width: 10px;
   background: #23272A;
-  
 }
 .c-chat::-webkit-scrollbar-thumb {
   background: #394048;
@@ -59,6 +60,7 @@ body {
 }
 
 .c-content {
+  height: 100%;
   background-color: #23272A;
   padding: 0 0 1em 1em;
 }
@@ -66,7 +68,6 @@ body {
 .c-image {
   margin-right:1em;
 }
-
 .c-image img {
   width: 50px;
   border-radius: 50%;
@@ -82,12 +83,10 @@ body {
   gap: 8px;
   align-items: center;
 }
-
 .c-name-box .c-name {
   font-size: 1em;
   font-weight: 700;
 }
-
 .c-name-box .c-createdAt {
   font-size: 0.8em;
   color: #999;
@@ -125,6 +124,18 @@ body {
 .c-form button:hover {
   background-color: #2C2F33;
   cursor: pointer;
+}
+
+.c-login button {
+  font-size: 1em;
+  padding: 1em;
+  background-color: #97A9B4;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.c-login button:hover {
+  background-color: #8B9AA5;
 }
 
 @media screen and (max-width: 800px) {

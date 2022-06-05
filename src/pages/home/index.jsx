@@ -3,11 +3,10 @@ import { FirebaseContext } from '../../contexts/FirebaseContext';
 import { messageRef } from '../../firebase';
 import { addDoc, onSnapshot, query, orderBy, limit, serverTimestamp } from 'firebase/firestore';
 import { ChatMessage } from '../../components/ChatMessage';
-import './style.css';
 
 export const Home = () => {
 
-  const { signOut, user, signed } = useContext(FirebaseContext);
+  const { signOut, user } = useContext(FirebaseContext);
 
   const inputMsg = useRef();
   const dummy = useRef();
@@ -33,7 +32,6 @@ export const Home = () => {
 
     setMsg('');
     inputMsg.current.focus();
-    dummy.current.scrollIntoView({ behavior: 'smooth' });
   }
 
   useEffect(() => {
@@ -43,6 +41,7 @@ export const Home = () => {
       snapshot.docs.forEach(doc => {
         setMessages(msg => [...msg, doc.data()])
       })
+      dummy.current.scrollInto(dummy.current.scrollHeight); 
     });
   }, [])
 
