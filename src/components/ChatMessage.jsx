@@ -1,5 +1,3 @@
-
-
 export const ChatMessage = (props) => {
   
   const { text, photoURL, createdAt, name } = props.msg;
@@ -12,15 +10,12 @@ export const ChatMessage = (props) => {
       </div>
 
       <div className='c-box'>
-        <div className='c-name'>
-          <span>
+        <div className='c-name-box'>
+          <span className='c-name'>
             {name}
           </span>
-          <span>
-            {
-            createdAt &&
-            createdAt.toDate().toLocaleTimeString()
-            }
+          <span className="c-createdAt">
+            {createdAt && createdAt.toDate().toLocaleTimeString()}
           </span>
         </div>
         <div className='c-text'>

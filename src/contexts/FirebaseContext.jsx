@@ -6,8 +6,6 @@ export const FirebaseContext = createContext();
 
 export const FirebaseContextProvider = ({ children }) => {
 
-  const provider = new GoogleAuthProvider();
-
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -19,25 +17,26 @@ export const FirebaseContextProvider = ({ children }) => {
       }
     }
     getStoragedUser();
-  }, [])
+  }, []);
 
   const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
     const auth = getAuth();
     signInWithPopup(auth, provider)
-    .then((result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      const user = result.user;
-      setUser(JSON.stringify(user));
-      sessionStorage.setItem('@user', JSON.stringify(user));
-      sessionStorage.setItem('@token', token);
-    }).catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      const email = error.email;
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      console.log(errorCode, errorMessage, email, credential);
-    });
+      .then(result => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        setUser(JSON.stringify(user));
+        sessionStorage.setItem('@user', JSON.stringify(user));
+        sessionStorage.setItem('@token', token);
+      }).catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.log(errorCode, errorMessage, email, credential);
+      });
   }
 
   const signOut = () => {
@@ -49,8 +48,8 @@ export const FirebaseContextProvider = ({ children }) => {
 
   const value = {
     googleSignIn,
-    user,
     signOut,
+    user,
     signed: !!user,
   }
 

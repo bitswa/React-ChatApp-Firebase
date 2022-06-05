@@ -1,26 +1,18 @@
 import { useContext, useEffect, useState, useRef } from 'react';
 import { FirebaseContext } from '../../contexts/FirebaseContext';
-import { db } from '../../firebase';
-import { addDoc, onSnapshot, query, orderBy, limit, serverTimestamp, collection } from 'firebase/firestore';
-import './style.css';
+import { messageRef } from '../../firebase';
+import { addDoc, onSnapshot, query, orderBy, limit, serverTimestamp } from 'firebase/firestore';
 import { ChatMessage } from '../../components/ChatMessage';
+import { Navigate } from 'react-router-dom';
+import './style.css';
 
 export const Home = () => {
 
-  const { signOut, user } = useContext(FirebaseContext);
-
-  const [json, setJson] = useState(null)
-
-  useEffect(() => {
-    if (JSON.stringify(user)) {
-      setJson(JSON.parse(user))
-    }
-  }, [user])
-
-  const messageRef = collection(db, 'messages');
+  const { signOut, user, signed } = useContext(FirebaseContext);
 
   const inputMsg = useRef();
   const dummy = useRef();
+
   const [msg, setMsg] = useState('');
   const [messages, setMessages] = useState([]);
 
@@ -31,12 +23,14 @@ export const Home = () => {
       return;
     }
 
+    const { photoURL, displayName } = JSON.parse(user);
+
     await addDoc(messageRef, {
       text: msg,
-      name: json.displayName,
       createdAt: serverTimestamp(),
-      photoURL: json.photoURL,
-    })
+      name: displayName,
+      photoURL,
+    });
 
     setMsg('');
     inputMsg.current.focus();
@@ -44,6 +38,11 @@ export const Home = () => {
   }
 
   useEffect(() => {
+
+    if(!signed) {
+      return <Navigate to='/' />
+    }
+
     const q = query(messageRef, orderBy('createdAt'), limit(25));
     const snap = onSnapshot(q, (snapshot) => {
       setMessages([]);
@@ -55,27 +54,30 @@ export const Home = () => {
 
   return (
     <div className='c-card'>
+
       <header className='c-header'>
-        <h1>Welcome</h1>
+        <h1>Chat</h1>
         <button onClick={signOut}>Sign out</button>
       </header>
-      <main className='c-chat'>
-          { messages && messages.map((msg, index) => <ChatMessage key={index} msg={msg} index={index} />)
-          }
+
+      <div className='c-content'>
+        <main className='c-chat'>
+
+          {messages && messages.map((msg, index) => <ChatMessage key={index} msg={msg} />)}
+
           <div ref={dummy}></div>
-      </main>
+        </main>
+
         <form className='c-form' onSubmit={sendMessage}>
           <input
             ref={inputMsg}
             value={msg}
+            placeholder='Type a message...'
             onChange={e => setMsg(e.target.value)}
           />
-          <button
-            type='submit'
-            onClick={sendMessage}
-          >Send
-          </button>
+          <button type='submit'>Send</button>
         </form>
+      </div>
     </div>
   )
 }

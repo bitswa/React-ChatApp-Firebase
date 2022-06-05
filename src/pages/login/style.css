@@ -1,0 +1,12 @@
+.c-login button {
+  font-size: 1em;
+  padding: 1em;
+  background-color: #97A9B4;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.c-login button:hover {
+  background-color: #8B9AA5;
+}
