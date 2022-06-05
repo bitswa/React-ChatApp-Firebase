@@ -3,7 +3,6 @@ import { FirebaseContext } from '../../contexts/FirebaseContext';
 import { messageRef } from '../../firebase';
 import { addDoc, onSnapshot, query, orderBy, limit, serverTimestamp } from 'firebase/firestore';
 import { ChatMessage } from '../../components/ChatMessage';
-import { Navigate } from 'react-router-dom';
 import './style.css';
 
 export const Home = () => {
@@ -38,12 +37,7 @@ export const Home = () => {
   }
 
   useEffect(() => {
-
-    if(!signed) {
-      return <Navigate to='/' />
-    }
-
-    const q = query(messageRef, orderBy('createdAt'));
+    const q = query(messageRef, orderBy('createdAt'), limit(100));
     const snap = onSnapshot(q, (snapshot) => {
       setMessages([]);
       snapshot.docs.forEach(doc => {
