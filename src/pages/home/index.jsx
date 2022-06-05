@@ -43,7 +43,7 @@ export const Home = () => {
       return <Navigate to='/' />
     }
 
-    const q = query(messageRef, orderBy('createdAt'), limit(25));
+    const q = query(messageRef, orderBy('createdAt'));
     const snap = onSnapshot(q, (snapshot) => {
       setMessages([]);
       snapshot.docs.forEach(doc => {
