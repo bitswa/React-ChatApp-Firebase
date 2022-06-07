@@ -13,7 +13,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(to right, #00c6fb 0%, #005bea 100%);
+  background: #1a1a1a;
 }
 
 .c-card {
@@ -111,7 +111,6 @@ body {
   background: none;
   outline: none;
 }
-
 .c-form button {
   width: 20%;
   padding: 10px;
