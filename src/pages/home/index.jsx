@@ -3,6 +3,8 @@ import { FirebaseContext } from '../../contexts/FirebaseContext';
 import { messageRef } from '../../firebase';
 import { addDoc, onSnapshot, query, orderBy, limit, serverTimestamp } from 'firebase/firestore';
 import { ChatMessage } from '../../components/ChatMessage';
+import { EmojiModal } from '../../components/EmojiModal';
+import send from '../../images/send-message.png';
 
 export const Home = () => {
 
@@ -13,6 +15,7 @@ export const Home = () => {
 
   const [msg, setMsg] = useState('');
   const [messages, setMessages] = useState([]);
+  const [emojiModal, setEmojiModal] = useState(false);
 
   const sendMessage = async(e) => {
     e.preventDefault();
@@ -32,7 +35,12 @@ export const Home = () => {
 
     setMsg('');
     inputMsg.current.focus();
+    dummy.current.scrollIntoView({ behavior: 'smooth' });
   }
+
+  useEffect(() => {
+    dummy.current.scrollIntoView(dummy.current.scrollHeight); 
+  }, [messages])
 
   useEffect(() => {
     const q = query(messageRef, orderBy('createdAt'), limit(100));
@@ -41,7 +49,7 @@ export const Home = () => {
       snapshot.docs.forEach(doc => {
         setMessages(msg => [...msg, doc.data()])
       })
-      dummy.current.scrollInto(dummy.current.scrollHeight); 
+      dummy.current.scrollIntoView({ behavior: 'smooth' });; 
     });
   }, [])
 
@@ -61,6 +69,8 @@ export const Home = () => {
           <div ref={dummy}></div>
         </main>
 
+        
+
         <form className='c-form' onSubmit={sendMessage}>
           <input
             ref={inputMsg}
@@ -68,7 +78,17 @@ export const Home = () => {
             placeholder='Type a message...'
             onChange={e => setMsg(e.target.value)}
           />
-          <button type='submit'>Send</button>
+
+          <div className='c-emoji_box'>
+            { emojiModal &&
+            <EmojiModal setEmojiModal={setEmojiModal} setMsg={setMsg} inputMsg={inputMsg} />}
+
+            <button type='button' className='c-emoji_button' onClick={() => setEmojiModal(!emojiModal)}>✌️</button>
+          </div>
+          
+          <button type='submit' className='c-submit_button'>
+            <img src={send} alt='send' />
+          </button>
         </form>
       </div>
     </div>
