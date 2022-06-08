@@ -12,7 +12,7 @@ export const FirebaseContextProvider = ({ children }) => {
     const getStoragedUser = () => {
       const localUser = localStorage.getItem('@user');
       const localToken = localStorage.getItem('@token');
-      if (localUser && localToken) { 
+      if (localUser && localToken) {
         setUser(localUser)
       }
     }
@@ -55,7 +55,7 @@ export const FirebaseContextProvider = ({ children }) => {
 
   return (
     <FirebaseContext.Provider value={value}>
-      { children }
+      {children}
     </FirebaseContext.Provider>
   )
 }

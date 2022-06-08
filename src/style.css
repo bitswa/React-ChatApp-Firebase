@@ -17,7 +17,6 @@ body {
 
 .c-card {
   width: 800px;
-  height: 100vh;
 }
 
 .c-header {
@@ -36,7 +35,8 @@ body {
 }
 
 .c-chat {
-  height: calc(100vh - 140px);
+  height: 85vh;
+
   overflow-y: scroll;
   background-color: #23272A;
 }
@@ -117,8 +117,6 @@ body {
 .c-form button {
   padding: 0 10px;
   border: none;
- 
-  
   cursor: pointer;
   background: none;
 }
@@ -129,7 +127,6 @@ body {
 .c-form .c-submit_button {
   display: grid;
   place-items: center;
-  width: 20%;
   border-radius: 0 8px 8px 0;
 }
 .c-submit_button img {

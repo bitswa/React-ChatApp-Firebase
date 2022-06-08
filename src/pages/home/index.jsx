@@ -17,10 +17,10 @@ export const Home = () => {
   const [messages, setMessages] = useState([]);
   const [emojiModal, setEmojiModal] = useState(false);
 
-  const sendMessage = async(e) => {
+  const sendMessage = async (e) => {
     e.preventDefault();
 
-    if(msg === '' || msg.trim() === '') {
+    if (msg === '' || msg.trim() === '') {
       return;
     }
 
@@ -36,11 +36,7 @@ export const Home = () => {
     setMsg('');
     inputMsg.current.focus();
     dummy.current.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  useEffect(() => {
-    dummy.current.scrollIntoView(dummy.current.scrollHeight); 
-  }, [messages])
+  };
 
   useEffect(() => {
     const q = query(messageRef, orderBy('createdAt'), limit(100));
@@ -48,10 +44,13 @@ export const Home = () => {
       setMessages([]);
       snapshot.docs.forEach(doc => {
         setMessages(msg => [...msg, doc.data()])
-      })
-      dummy.current.scrollIntoView({ behavior: 'smooth' });; 
+      });
     });
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    dummy.current.scrollIntoView(dummy.current.scrollHeight);
+  }, [messages])
 
   return (
     <div className='c-card'>
@@ -64,7 +63,7 @@ export const Home = () => {
       <div className='c-content'>
         <main className='c-chat'>
 
-          {messages && messages.map((msg, index) => <ChatMessage key={index} msg={msg} />)}
+          {messages?.map((msg, index) => <ChatMessage key={index} msg={msg} />)}
 
           <div ref={dummy}></div>
         </main>
@@ -78,12 +77,12 @@ export const Home = () => {
           />
 
           <div className='c-emoji_box'>
-            { emojiModal &&
-            <EmojiModal setEmojiModal={setEmojiModal} setMsg={setMsg} inputMsg={inputMsg} />}
+            {emojiModal &&
+              <EmojiModal setEmojiModal={setEmojiModal} setMsg={setMsg} inputMsg={inputMsg} />}
 
             <button type='button' className='c-emoji_button' onClick={() => setEmojiModal(!emojiModal)}>✌️</button>
           </div>
-          
+
           <button type='submit' className='c-submit_button'>
             <img src={send} alt='send' />
           </button>
