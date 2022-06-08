@@ -36,7 +36,7 @@ body {
 }
 
 .c-chat {
-  height: calc(100vh - 129px);
+  height: calc(100vh - 140px);
   overflow-y: scroll;
   background-color: #23272A;
 }
@@ -63,9 +63,12 @@ body {
 
 .c-image {
   margin-right:1em;
+  display: flex;
+  justify-content: center;
 }
 .c-image img {
-  width: 50px;
+  align-self: center;
+  width: 60px;
   border-radius: 50%;
 }
 
@@ -80,7 +83,7 @@ body {
   align-items: center;
 }
 .c-name-box .c-name {
-  font-size: 1em;
+  font-size: 1.2em;
   font-weight: 700;
 }
 .c-name-box .c-createdAt {
@@ -89,12 +92,15 @@ body {
 }
 
 .c-text {
-  font-size: 1.2em;  
+  font-size: 1.5em;  
 }
 
 .c-form {
   display: flex;
   align-items: center;
+
+  padding: 4px;
+
   margin-right: 1em;
   border-radius: 8px;
   background-color: #2C2F33;
@@ -102,17 +108,17 @@ body {
 
 .c-form input {
   width: 100%;
-  padding: 10px;
+  padding: 0 10px;
   border: none;
   border-radius: 5px;
   background: none;
   outline: none;
 }
 .c-form button {
-  padding: 10px;
+  padding: 0 10px;
   border: none;
  
-  outline: none;
+  
   cursor: pointer;
   background: none;
 }
@@ -121,14 +127,13 @@ body {
 }
 
 .c-form .c-submit_button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   width: 20%;
   border-radius: 0 8px 8px 0;
 }
 .c-submit_button img {
-  width: 20px;
+  width: 2em;
   align-self: center;
 }
 
@@ -138,9 +143,9 @@ body {
 
 .c-form .c-emoji_button {
   width: 100%;
-  padding: 10px;
   border: none;
   text-align: center;
+  font-size: 1.7em;
 }
 
 .c-emoji_modal {

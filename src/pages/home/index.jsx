@@ -69,8 +69,6 @@ export const Home = () => {
           <div ref={dummy}></div>
         </main>
 
-        
-
         <form className='c-form' onSubmit={sendMessage}>
           <input
             ref={inputMsg}
